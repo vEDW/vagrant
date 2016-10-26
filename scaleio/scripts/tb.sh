@@ -74,6 +74,13 @@ echo VERSION_MAJOR_MINOR = $VERSION_MAJOR_MINOR
 echo VERSION_SUMMARY = $VERSION_SUMMARY
 
 truncate -s 100GB ${DEVICE}
+
+echo "http_caching=packages" >> /etc/yum.conf
+yum clean all
+service NetworkManager stop
+chkconfig NetworkManager off
+ifup enp0s8
+
 yum install unzip numactl libaio wget -y
 cd /vagrant
 if [ ! -f "ScaleIO_Linux_v"$VERSION_MAJOR_MINOR".zip" ];

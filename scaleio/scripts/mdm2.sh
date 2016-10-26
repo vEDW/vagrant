@@ -86,6 +86,13 @@ echo VERSION_SUMMARY = $VERSION_SUMMARY
 
 #echo "Number files in SEARCH PATH with EXTENSION:" $(ls -1 "${SEARCHPATH}"/*."${EXTENSION}" | wc -l)
 truncate -s 100GB ${DEVICE}
+
+echo "http_caching=packages" >> /etc/yum.conf
+yum clean all
+service NetworkManager stop
+chkconfig NetworkManager off
+ifup enp0s8
+
 yum install unzip numactl libaio -y
 
 cd /vagrant
